@@ -22,7 +22,7 @@ void calculadora_cientifica();
 void mostrar_menu_calculadora();
 void processar_numero_especial(char op, float *res, char *exp);
 void processar_operacao_unaria(char op, float res, char *temp);
-void processar_operacao_binaria(char op, float res, float n2, char *temp);
+void processar_operacao_binaria(char op, float n2, char *temp);
 
 void conversor_de_unidades();
 void conversor_moedas();
