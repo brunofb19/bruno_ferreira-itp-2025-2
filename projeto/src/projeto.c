@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
+#include <stdlib.h> 
 
 #define MAX_HIST 100
 #define TAM_EXP 200
@@ -14,13 +15,14 @@ typedef struct {
 CalcHist *hist = NULL;
 int tot_calc = 0;
 int capacidade_hist = 0;
+int idx_hist = 0;
 
 float calcular(char si, float a, float b);
 void calculadora_cientifica();
 void mostrar_menu_calculadora();
 void processar_numero_especial(char op, float *res, char *exp);
-void processar_operacao_unaria(char op, float res, char *exp, char *temp);
-void processar_operacao_binaria(char op, float res, float n2, char *exp, char *temp);
+void processar_operacao_unaria(char op, float res, char *temp);
+void processar_operacao_binaria(char op, float res, float n2, char *temp);
 
 void conversor_de_unidades();
 void conversor_moedas();
@@ -89,6 +91,7 @@ void limpar_hist() {
         hist = NULL;
         tot_calc = 0;
         capacidade_hist = 0;
+        idx_hist = 0;
         printf("Memoria do historico liberada!\n");
     }
     printf("Historico limpo!\n");
@@ -167,7 +170,7 @@ void processar_numero_especial(char op, float *res, char *exp) {
     }
 }
 
-void processar_operacao_unaria(char op, float res, char *exp, char *temp) {
+void processar_operacao_unaria(char op, float res, char *temp) {
     if(op == 'r') {
         sprintf(temp, " sqrt(%.6f)", res);
     } else if(op == '|') {
@@ -179,7 +182,7 @@ void processar_operacao_unaria(char op, float res, char *exp, char *temp) {
     }
 }
 
-void processar_operacao_binaria(char op, float res, float n2, char *exp, char *temp) {
+void processar_operacao_binaria(char op, float n2, char *temp) {
     sprintf(temp, " %c %.6f", op, n2);
 }
 
@@ -224,9 +227,9 @@ void calculadora_cientifica() {
             res=calcular(op, res, n2);
 
             if(op == 'r' || op == '|' || op == '!' || op == 'l') {
-                processar_operacao_unaria(op, temp_res, exp, temp);
+                processar_operacao_unaria(op, temp_res, temp);
             } else {
-                processar_operacao_binaria(op, temp_res, n2, exp, temp);
+                processar_operacao_binaria(op, n2, temp);
             }
             strcat(exp, temp);
 
@@ -459,6 +462,10 @@ int main() {
             printf("digite a opcao certa\n");
         }
     }while(aux==1);
+
+    if (hist != NULL) {
+        free(hist);
+    }
 
     return 0;
 }
