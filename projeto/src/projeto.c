@@ -23,6 +23,7 @@ void mostrar_menu_calculadora();
 void processar_numero_especial(char op, float *res, char *exp);
 void processar_operacao_unaria(char op, float res, char *temp);
 void processar_operacao_binaria(char op, float n2, char *temp);
+void formatar_numero(float num, char *str);
 
 void conversor_de_unidades();
 void conversor_moedas();
@@ -34,6 +35,30 @@ void conversor_velocidade();
 void mostrar_menu_unidades(const char* titulo, const char* unidades[], int num_unidades);
 int opcao_valida(int op, int max_op);
 int criar_conversor (const char** nomes_unidades, float* fatores, int num_unidades, const char* titulo, float *resultado);
+
+void formatar_numero(float num, char *str) {
+    if (num == (int)num) {
+
+        sprintf(str, "%d", (int)num);
+
+    } else {
+
+        sprintf(str, "%.6f", num);
+        
+        int len = strlen(str);
+        for (int i = len - 1; i >= 0; i--) {
+            if (str[i] == '0') {
+                str[i] = '\0';
+            } else if (str[i] == '.') {
+                str[i] = '\0';
+                break;
+            } else {
+                break;
+            }
+        }
+    }
+}
+
 
 int expandir_historico() {
     int nova_capacidade = (capacidade_hist == 0) ? 10 : capacidade_hist * 2;
@@ -80,7 +105,9 @@ void mostrar_hist() {
     
     for (int i = 0; i < mostrar; i++) {
         int pos = (start + i) % MAX_HIST;
-        printf("%d: %s = %.6f\n", i + 1, hist[pos].exp, hist[pos].res);
+        char num_formatado[50];
+        formatar_numero(hist[pos].res, num_formatado);
+        printf("%d: %s = %s\n", i + 1, hist[pos].exp, num_formatado);
     }
     printf("Total de calculos: %d\n", tot_calc);
 }
@@ -171,80 +198,100 @@ void processar_numero_especial(char op, float *res, char *exp) {
 }
 
 void processar_operacao_unaria(char op, float res, char *temp) {
+    char num_formatado[50];
+    formatar_numero(res, num_formatado);
+    
     if(op == 'r') {
-        sprintf(temp, " sqrt(%.6f)", res);
+        sprintf(temp, " sqrt(%s)", num_formatado);
     } else if(op == '|') {
-        sprintf(temp, " |%.6f|", res);
+        sprintf(temp, " |%s|", num_formatado);
     } else if(op == '!') {
-        sprintf(temp, " %.6f!", res);
+        sprintf(temp, " %s!", num_formatado);
     } else if(op == 'l') {
-        sprintf(temp, " log10(%.6f)", res);
+        sprintf(temp, " log10(%s)", num_formatado);
     }
 }
 
 void processar_operacao_binaria(char op, float n2, char *temp) {
-    sprintf(temp, " %c %.6f", op, n2);
+    char num_formatado[50];
+    formatar_numero(n2, num_formatado);
+    sprintf(temp, " %c %s", op, num_formatado);
 }
 
 void calculadora_cientifica() {
-    float res, n1, n2=0;
-    char op;
-    char exp[TAM_EXP] = "";
-    char temp[50];
+    char continuar = 's';
 
-    mostrar_menu_calculadora();
+    while(continuar == 's' || continuar == 'S') {
+        float res, n1, n2=0;
+        char op;
+        char exp[TAM_EXP] = "";
+        char temp[50];
 
-    scanf("%f", &n1);
-    scanf(" %c", &op);
-    res=n1;
-    sprintf(exp, "%.6f", n1);
+        mostrar_menu_calculadora();
 
-    while (op!='='){
-        
-        if(op == 'h' || op == 'H') {
-            mostrar_hist();
-            printf("\nDigite a proxima operacao (ou = para sair): ");
-            scanf(" %c", &op);
-            continue;
-        } else if(op == 'c' || op == 'C') {
-            limpar_hist();
-            printf("\nDigite a proxima operacao (ou = para sair): ");
-            scanf(" %c", &op);
-            continue;
-        } 
+        scanf("%f", &n1);
+        scanf(" %c", &op);
+        res=n1;
 
-        if(op == 'p' || op == 'e') {
-            processar_numero_especial(op, &res, exp);
-            scanf(" %c", &op);
-        }
+        char num_inicial[50];
+        formatar_numero(n1, num_inicial);
+        strcpy(exp, num_inicial); 
 
-        if((op!='r')&&(op!='|')&&(op!='!')&&(op!='l')&&(op!='=')){
-            scanf("%f", &n2);            
-        }
-        
-        if(op!='='){
-            float temp_res = res;
-            res=calcular(op, res, n2);
+        while (op!='='){
+            
+            if(op == 'h' || op == 'H') {
+                mostrar_hist();
+                printf("\nDigite a proxima operacao (ou = para sair): ");
+                scanf(" %c", &op);
+                continue;
+            } else if(op == 'c' || op == 'C') {
+                limpar_hist();
+                printf("\nDigite a proxima operacao (ou = para sair): ");
+                scanf(" %c", &op);
+                continue;
+            } 
 
-            if(op == 'r' || op == '|' || op == '!' || op == 'l') {
-                processar_operacao_unaria(op, temp_res, temp);
-            } else {
-                processar_operacao_binaria(op, n2, temp);
+            if(op == 'p' || op == 'e') {
+                processar_numero_especial(op, &res, exp);
+                scanf(" %c", &op);
             }
-            strcat(exp, temp);
 
-            scanf(" %c", &op);
+            if((op!='r')&&(op!='|')&&(op!='!')&&(op!='l')&&(op!='=')){
+                scanf("%f", &n2);            
+            }
+            
+            if(op!='='){
+                float temp_res = res;
+                res=calcular(op, res, n2);
+
+                if(op == 'r' || op == '|' || op == '!' || op == 'l') {
+                    processar_operacao_unaria(op, temp_res, temp);
+                } else {
+                    processar_operacao_binaria(op, n2, temp);
+                }
+                strcat(exp, temp);
+
+                scanf(" %c", &op);
+            }
         }
-    }
-    printf("\nresultado da operacao: %f\n", res);
-    add_hist(exp, res);
 
-    printf("\nDeseja ver o historico? (s/n): ");
-    char ver_hist;
-    scanf(" %c", &ver_hist);
-    if(ver_hist == 's' || ver_hist == 'S') {
-        mostrar_hist();
+        char resultado_formatado[50];
+        formatar_numero(res, resultado_formatado); 
+        printf("\nresultado da operacao: %s\n", resultado_formatado); 
+        add_hist(exp, res);
+
+        printf("\nDeseja ver o historico? (s/n): ");
+        char ver_hist;
+        scanf(" %c", &ver_hist);
+        if(ver_hist == 's' || ver_hist == 'S') {
+            mostrar_hist();
+        }
+        printf("\nDeseja fazer outro calculo? (s/n): ");
+        scanf(" %c", &continuar);
     }
+    printf("\n=== HISTORICO FINAL ===\n");
+    mostrar_hist();
+    printf("Obrigado por usar a calculadora cientifica!\n");
 }
 
 void conversor_de_unidades(){
@@ -309,9 +356,9 @@ int criar_conversor(const char** nomes_unidades, float* fatores, int num_unidade
     float val;
     
     printf("Selecione a unidade de origem: ");
-    scanf("%d", &op1);
-    printf("Selecione a unidade de destino: ");
     scanf("%d", &op2);
+    printf("Selecione a unidade de destino: ");
+    scanf("%d", &op1);
     printf("Digite o valor: ");
     scanf("%f", &val);
     
@@ -359,7 +406,9 @@ void conversor_comprimento() {
     float fatores[] = {1.0, 0.01, 1000.0, 0.001, 0.3048, 0.9144, 0.0254};
     
     if(criar_conversor(unidades, fatores, num_unidades, "CONVERSOR DE COMPRIMENTO", &res)) {
-        printf("\nResultado: %.6f\n", res);
+        char num_formatado[50];
+        formatar_numero(res, num_formatado);
+        printf("\nResultado: %s\n", num_formatado);
     }
 
 }
@@ -380,7 +429,9 @@ void conversor_area() {
     int num_unidades = 6;
 
     if(criar_conversor(unidades, fatores, num_unidades, "CONVERSOR DE AREA", &res)) {
-        printf("\nResultado: %.6f\n", res);
+        char num_formatado[50];
+        formatar_numero(res, num_formatado);
+        printf("\nResultado: %s\n", num_formatado);
     }
 
 }
@@ -401,7 +452,9 @@ void conversor_volume() {
     int num_unidades = 6;
     
     if(criar_conversor(unidades, fatores, num_unidades, "CONVERSOR DE VOLUME", &res)) {
-        printf("\nResultado: %.6f\n", res);
+        char num_formatado[50];
+        formatar_numero(res, num_formatado);
+        printf("\nResultado: %s\n", num_formatado);
     }
 }
 
@@ -421,7 +474,9 @@ void conversor_massa() {
     int num_unidades = 6;
     
     if(criar_conversor(unidades, fatores, num_unidades, "CONVERSOR DE MASSA", &res)) {
-        printf("\nResultado: %.6f\n", res);
+        char num_formatado[50];
+        formatar_numero(res, num_formatado);
+        printf("\nResultado: %s\n", num_formatado);
     }
 }
 
@@ -440,7 +495,9 @@ void conversor_velocidade() {
     int num_unidades = 5;
     
     if(criar_conversor(unidades, fatores, num_unidades, "CONVERSOR DE VELOCIDADE", &res)) {
-        printf("\nResultado: %.6f\n", res);
+        char num_formatado[50];
+        formatar_numero(res, num_formatado);
+        printf("\nResultado: %s\n", num_formatado);
     }
 }
 
