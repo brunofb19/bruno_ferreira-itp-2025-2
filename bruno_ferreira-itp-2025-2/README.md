@@ -1,72 +1,178 @@
-# Introdução a Técnicas de Programação - Unidade 1
-**Aluno**: Bruno Ferreira da Silva
-**Matrícula**: 20250041199
-**Período**: 2025.2
-## 📁 Estrutura do Projeto
-- `projeto/`: Projeto principal da unidade
-- `listas/`: Soluções das listas de exercícios
-- `README.md`: Este arquivo
-## 🚀 Projeto: Calculadora Multifuncional
-**Descrição**: O código implementa uma calculadora multifuncional, que reúne uma calculadora científica e um conversor de unidades em um único programa.
-A parte científica realiza operações como soma, subtração, multiplicação, divisão, potência, raiz quadrada, logaritmo, módulo e fatorial, enquanto o conversor trabalha com moedas, comprimento, área, volume, massa e velocidade. Além disso, inclui um sistema de histórico, implementado por meio de um vetor de estruturas, que armazena as expressões e resultados calculados durante a execução.
-**Repositório**: https://github.com/brunofb19/bruno_ferreira-itp-2025-2.git
-**Vídeo de Demonstração**: https://youtu.be/a8BIftcM2No
-### Funcionalidades Implementadas:
-- Calculadora científica com operações de soma, subtração, multiplicação, divisão, potência, raiz quadrada, logaritmo, módulo e fatorial;
-- Conversor de unidades com suporte a moedas, comprimento, área, volume, massa e velocidade;
-- Histórico de cálculos, armazenando expressões e resultados.
-- Tratamento de entrada e exibição de resultados formatados.
+Introdução a Técnicas de Programação - Unidade 2
+Aluno: Bruno Ferreira da Silva
+Matrícula: 20250041199
+Período: 2025.2
 
-### Conceitos da U1 Aplicados:
-- Estruturas condicionais:
-Utilizadas amplamente através de comandos if e else if para identificar a operação matemática escolhida pelo usuário, bem como as opções dentro dos conversores (por exemplo, escolher o tipo de unidade ou moeda).
-- Estruturas de repetição:
-Aplicadas com laços for no cálculo de fatoriais e do-while no controle do menu principal, permitindo que o programa repita as opções até que o usuário decida encerrar.
-- Vetores:
-Empregados na implementação do histórico de cálculos, onde cada elemento do vetor armazena uma estrutura (struct) contendo a expressão e o resultado.
-- Funções:
-O código foi dividido em múltiplas funções para organizar as funcionalidades:
-calcular() → executa as operações matemáticas principais;
-calculadora_cientifica() → gerencia a interface da calculadora e as chamadas de função;
-conversor_moedas(), conversor_comprimento(), conversor_area(), conversor_volume(), conversor_massa() e conversor_velocidade() → realizam as conversões específicas;
-add_hist(), mostrar_hist() e limpar_hist() → controlam o histórico de cálculos.
+📁 Estrutura do Projeto
+projeto/: Projeto principal da unidade
 
-## 📚 Listas de Exercícios
-### Semana 2 - Variáveis, Tipos e Operadores:
-- ✅ Problema 1: Calculadora de IMC
-- ✅ Problema 2: Conversão de temperatura
-- ✅ Problema 3: Cálculo de juros compostos
-- ✅ Problema 4: Operações aritméticas básicas
-### Semana 3 - Condicionais:
-- ✅ Problema 1: Classificação de IMC
-- ✅ Problema 2: Calculadora de energia elétrica
-- ✅ Problema 3: Sistema de notas
-- ✅ Problema 4: Pedra, papel, tesoura
-- ✅ Problema 5: Calculadora de desconto progressivo
-- ✅ Problema 6: Diagnóstico médico simples
-- ✅ Problema 7: Sistema de equações do 2º grau
-- ✅ Problema 8: Validador de triângulos
-### Semana 4A - Repetições:
-- ✅ Problema 1: Dobrar folha
-- ✅ Problema 2: Homem Aranha
-- ✅ Problema 3: Números colegas
-- ✅ Problema 4: Jogo de dardos
-### Semana 4B - Análise e Padrões:
-- ✅ Questões 1-4: Análise de código
-- ✅ Questões 5-11: Implementações
-### Semana 5 - Funções (Parte 1):
-- ✅ Problema 1: Horários das rondas
-- ✅ Problema 2: Primos triplos
-- ✅ Problema 3: Pousando a sonda espacial
-### Semana 6 - Vetores:
-- ✅ Problema 1: MEC - Correção ENEM
-- ✅ Problema 2: Álbum de figurinhas
-- ✅ Problema 3: A construção da ponte
-- ✅ Problema 4: Em busca do tesouro perdido
-## 🎯 Principais Aprendizados
-Com este projeto, compreendi melhor o uso de estruturas condicionais, laços de repetição, funções e vetores na prática.
-Aprendi também a organizar o código de forma modular, facilitando sua leitura e manutenção, além de perceber a importância da clareza e estruturação no desenvolvimento em C.
-## 🔧 Ambiente de Desenvolvimento
-- **SO**: Windows
-- **Compilador**: GCC versão 13.2.0
-- **Editor**: Visual Studio Code
+listas/: Soluções das listas de exercícios
+
+README.md: Este arquivo
+
+🚀 Projeto: Calculadora Multifuncional - Evolução U2
+Evolução do Projeto da U1 para U2
+Descrição: O projeto da calculadora multifuncional evoluiu significativamente na segunda unidade, incorporando os novos conceitos aprendidos para criar um sistema mais robusto, eficiente e escalável. A calculadora científica agora possui um sistema de histórico completamente dinâmico e o conversor de unidades foi reestruturado para uma arquitetura mais modular e expansível.
+
+Repositório: https://github.com/brunofb19/bruno_ferreira-itp-2025-2.git
+
+🆕 Novas Funcionalidades Implementadas na U2:
+Sistema de Histórico Dinâmico: Implementado com alocação dinâmica de memória, permitindo crescimento automático conforme necessário
+
+Formatação Inteligente de Números: Remoção automática de zeros desnecessários nos resultados
+
+Interface Iterativa Aprimorada: Calculadora científica com loop contínuo até decisão explícita do usuário
+
+Arquitetura Modular Expandida: Conversor de unidades com sistema unificado de menus e fatores de conversão
+
+Gestão Eficiente de Memória: Implementação completa de alocação e liberação dinâmica
+
+🎯 Conceitos da U2 Aplicados:
+Strings e Manipulação de Texto
+Formatação dinâmica de expressões matemáticas
+
+Remoção inteligente de zeros decimais desnecessários
+
+Construção de menus interativos através de arrays de strings
+
+Manipulação eficiente de texto para melhorar a experiência do usuário
+
+Estruturas de Repetição Aninhadas
+Interface com dois níveis de interação: sessões múltiplas e operações sequenciais
+
+Validação de entrada do usuário em múltiplos níveis
+
+Complexidade algorítmica controlada para garantir desempenho
+
+Matrizes e Arrays Bidimensionais
+Sistema unificado de menus para conversor de unidades
+
+Associação eficiente entre categorias e unidades de medida
+
+Estratégias de percorrimento para exibição organizada de opções
+
+Ponteiros
+Passagem por referência para evitar cópia desnecessária de dados
+
+Arrays dinâmicos para gestão flexível do histórico
+
+Ponteiros para funções permitindo chamadas dinâmicas aos conversores
+
+Melhoria significativa na eficiência de memória e desempenho
+
+Alocação Dinâmica de Memória
+Sistema de histórico expansível com realocação progressiva
+
+Estratégia de duplicação de capacidade para crescimento otimizado
+
+Gerenciamento rigoroso para prevenção de vazamentos de memória
+
+Tratamento robusto de falhas de alocação
+
+🔧 Melhorias Técnicas Implementadas:
+Gestão de Memória: Transição de arrays estáticos para alocação dinâmica
+
+Escalabilidade: Sistema adaptável ao uso real, alocando apenas o necessário
+
+Manutenibilidade: Código mais modular e organizado para futuras expansões
+
+Experiência do Usuário: Interface mais fluida com feedback imediato
+
+📊 Comparativo U1 vs U2:
+Aspecto	U1	U2
+Histórico	Array estático (100 elementos)	Alocação dinâmica expansível
+Gestão de Memória	Estática	Dinâmica com realocação
+Flexibilidade	Limitada	Alta (crescimento conforme uso)
+Organização	Procedural básica	Modular com ponteiros
+Eficiência	Consistente	Adaptativa ao uso
+📚 Listas de Exercícios - U2
+Semana 7 - Strings (Parte 1):
+✅ Problema 1: Contador de palavras
+
+✅ Problema 2: Buscador de nomes
+
+✅ Problema 3: Analisador de log
+
+✅ Problema 4: Tradutor de mensagens
+
+Semana 8 - Strings (Parte 2):
+✅ Problema 1: Validador de senhas
+
+✅ Problema 2: Formatador de texto
+
+✅ Problema 3: Analisador léxico
+
+✅ Problema 4: Compressor de strings
+
+Semana 9 - Matrizes:
+✅ Problema 1: Calculadora de matrizes
+
+✅ Problema 2: Jogo da velha
+
+✅ Problema 3: Transformações geométricas
+
+✅ Problema 4: Sistema de assentos
+
+Semana 10 - Ponteiros (Parte 1):
+✅ Problema 1: Manipulador de arrays
+
+✅ Problema 2: Calculadora de estatísticas
+
+✅ Problema 3: Sistema de ordenação
+
+✅ Problema 4: Gerenciador de memória
+
+Semana 11 - Ponteiros (Parte 2):
+✅ Problema 1: Lista encadeada simples
+
+✅ Problema 2: Calculadora de expressões
+
+✅ Problema 3: Sistema de cache
+
+✅ Problema 4: Otimizador de desempenho
+
+Semana 12 - Alocação Dinâmica:
+✅ Problema 1: Gerenciador de contatos
+
+✅ Problema 2: Sistema de arquivos virtual
+
+✅ Problema 3: Alocador de memória
+
+✅ Problema 4: Otimizador de recursos
+
+🎯 Principais Aprendizados - U2
+Com a evolução do projeto na segunda unidade, adquiri compreensão profunda sobre:
+
+Gestão de Memória: Controle preciso de alocação e liberação dinâmica
+
+Eficiência com Ponteiros: Uso estratégico para melhor desempenho
+
+Escalabilidade: Design de sistemas que crescem conforme a necessidade
+
+Robustez: Tratamento adequado de erros e condições limite
+
+Arquitetura Modular: Organização de código para facilitar manutenção e expansão
+
+A transição de estruturas estáticas para dinâmicas demonstrou na prática as vantagens em flexibilidade e eficiência, enquanto o uso de ponteiros revelou-se fundamental para otimização de recursos.
+
+🔧 Ambiente de Desenvolvimento
+SO: Windows
+
+Compilador: GCC versão 13.2.0
+
+Editor: Visual Studio Code
+
+Ferramentas: Git para controle de versão
+
+🚀 Próximos Passos
+Para a U3, as expansões planejadas incluem:
+
+Separação do código em múltiplos arquivos para melhor organização
+
+Implementação de persistência de dados através de arquivos
+
+Suporte a expressões matemáticas mais complexas
+
+Desenvolvimento de interface gráfica básica
+
+Sistema de plugins para funcionalidades extras
